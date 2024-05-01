@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Users</h2>
+    <ul>
+        {{range .}}
+        <li><a href="/Users/{{.}}/profile">{{.}}</a></li>
+        {{end}}
+    </ul>
+
+    <p><a href="/create">New Profile</a></p>
+
+</body>
+</html>

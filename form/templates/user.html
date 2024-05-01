@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>
+        {{.Name}}
+    </h2>
+    <hr>
+    <h3>Biodata</h3>
+    <ol>
+        <li>Age: {{.Age}}</li>
+        <li>Level: {{.Level}}00</li>
+        <li>Department: {{.Department}}</li>
+        <li>State of Origin: {{.Origin}}</li>
+    </ol>
+    <a href="/Users">Back</a> ||
+    [<a href="/Users/{{.Name}}/edit">edit</a>]
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+<h1>[Edit] {{.Name}}</h1>
+<hr>
+<form action="/update" method="post" >
+
+    <label >
+        Name:
+        <input type="text" name="Name" value="{{.Name}}">
+        <input type="text" name="Old_Name" value="{{.Name}}" hidden="True">
+    </label>
+    <br>
+    <label >
+        Age:
+        <input type="text" name="Age" placeholder="18" value="{{.Age}}">
+    </label>
+    <br>
+    <label>
+        Level:
+        {{ if eq .Level 1 }}
+        100 <input type="radio" name="Level" value=1 checked>
+        {{ else }}
+        100 <input type="radio" name="Level" value=1 >
+        {{ end }}
+        {{ if eq .Level 2 }}
+        200 <input type="radio" name="Level" value=1 checked>
+        {{ else }}
+        200 <input type="radio" name="Level" value=1 >
+        {{ end }}
+        {{ if eq .Level 3 }}
+        300 <input type="radio" name="Level" value=1 checked>
+        {{ else }}
+        300 <input type="radio" name="Level" value=1 >
+        {{ end }}
+        {{ if eq .Level 4 }}
+        400 <input type="radio" name="Level" value=1 checked>
+        {{ else }}
+        400 <input type="radio" name="Level" value=1 >
+        {{ end }}
+        {{ if eq .Level 5 }}
+        500 <input type="radio" name="Level" value=1 checked>
+        {{ else }}
+        500 <input type="radio" name="Level" value=1 >
+        {{ end }}
+    </label>
+    <br>
+    <label>
+        Department:
+        <input type="text" name="Department" value="{{.Department}}">
+    </label>
+    <br>
+        <label >
+        State of Origin:
+        <input type="text" name="Origin" value="{{.Origin}}">
+    </label>
+    <br>
+    <button type="submit">Update</button>
+    <a href="/Users/{{.Name}}/profile">Return</a>
+</form>
+</body>
+</html>
