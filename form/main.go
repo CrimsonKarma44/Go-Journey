@@ -183,8 +183,31 @@ func editPorfile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// API
+func allProfilesApi(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		profiles := []Profile{}
+
+		profileNames := viewUsers()
+		for _, name := range profileNames {
+			profile, _ := viewJson(name)
+			profiles = append(profiles, *profile)
+		}
+		w.Header().Set("Content-Type", "application/json")
+
+		//_ = json.NewEncoder(w).Encode(profiles)
+		for _, profile := range profiles {
+			profileJson, _ := json.Marshal(profile)
+			w.Write(profileJson)
+			//_ = json.NewEncoder(w).Encode(profile)
+		}
+	}
+}
+
 func urlHandler() {
+	fmt.Println("Server is starting at port: 8080")
 	http.HandleFunc("/Users", viewAllUsers)
+	http.HandleFunc("/API/Users", allProfilesApi)
 	http.HandleFunc("/Users/", viewHandler)
 	http.HandleFunc("/create", creatProfile)
 	http.HandleFunc("/update", editPorfile)
