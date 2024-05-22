@@ -37,8 +37,6 @@
 // 	fmt.Println(string(p2.Body))
 // }
 
-//go:build ignore
-
 // package main
 
 // import (

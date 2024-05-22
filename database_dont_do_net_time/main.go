@@ -11,9 +11,9 @@ import (
 
 const (
 	username = "karma"
-	password = "pass"
+	password = "password"
 	hostname = "127.0.0.1:3306"
-	dbname   = "eventify"
+	dbname   = "go_server"
 )
 
 type User struct {
