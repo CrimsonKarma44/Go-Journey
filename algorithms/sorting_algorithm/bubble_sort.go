@@ -1,6 +1,5 @@
 package sorting_algorithm
 
-
 func BubbleSort(arr []int) []int {
 	length := len(arr)
 	for i := 0; i < length; i++ {
@@ -12,4 +11,3 @@ func BubbleSort(arr []int) []int {
 	}
 	return arr
 }
-
