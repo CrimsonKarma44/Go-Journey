@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-// AuthMiddleware is a middleware for protecting routes.
+// AuthMiddleware is a middlewares for protecting routes.
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cookie, err := r.Cookie("token")
