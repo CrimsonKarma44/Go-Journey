@@ -48,7 +48,7 @@ func main() {
 	if err != nil {
 		fmt.Printf("An error occured at migration: %s", err)
 	}
-	//db.Create(&User{Username: "James", Password: "123456"})
+	db.Create(&User{Username: "James", Password: "123456"})
 	//db.Model(&User{}).Where("Username = ?", "James").Update("Password", hashed_password)
 
 	var username string
