@@ -10,11 +10,11 @@ import (
 )
 
 func main() {
-	var date time.Time
-	date = time.Date(2001, time.January, 23, 00, 00, 00, 0, time.Local)
-	student := models.Student{Name: "Princewill", Age: 23, School: "FUTMINNA", DateOfBirth: date}
+	//var date time.Time
+	//date = time.Date(2001, time.January, 23, 00, 00, 00, 0, time.Local)
+	//student := models.Student{Name: "Princewill", Age: 23, School: "FUTMINNA", DateOfBirth: date}
 
-	utils.Single(student)
+	//utils.Single(student)
 
 	reader := bufio.NewReader(os.Stdin)
 	var person models.Student
