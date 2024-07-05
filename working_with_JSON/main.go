@@ -13,25 +13,42 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	var person models.Student
+	var condition string
+	var students []models.Student
 
-	fmt.Println("Name:")
-	name, _, _ := reader.ReadLine()
-	person.Name = string(name)
+	fmt.Println("register student? (y/n)")
+	fmt.Scanln(&condition)
+	if condition == "y" {
 
-	fmt.Println("Age:")
-	fmt.Scan(&person.Age)
+		fmt.Println("Name:")
+		name, _, _ := reader.ReadLine()
+		person.Name = string(name)
 
-	fmt.Println("School:")
-	school, _, _ := reader.ReadLine()
-	person.School = string(school)
+		fmt.Println("Age:")
+		fmt.Scan(&person.Age)
 
-	person.DateOfBirth = time.Now()
+		fmt.Println("School:")
+		school, _, _ := reader.ReadLine()
+		person.School = string(school)
 
-	err := utils.StudentAdder(person)
+		person.DateOfBirth = time.Now()
 
-	if err != nil {
-		fmt.Println("Student could not be added!...", err)
-	} else {
-		fmt.Println("Student Added....")
+		err := utils.StudentAdder(person)
+
+		if err != nil {
+			fmt.Println("Student could not be added!...", err)
+		} else {
+			fmt.Println("Student Added....")
+		}
+	} else if condition == "n" {
+	}
+
+	fmt.Println("Do want to view Students? (y/n)")
+	fmt.Scanln(&condition)
+	if condition == "y" {
+		fmt.Println("The recorded students are:")
+		for count, value := range utils.Reader(students) {
+			fmt.Println(count+1, value.Name)
+		}
 	}
 }
