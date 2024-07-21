@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+   <meta charset="UTF-8" />
+   <link rel="stylesheet" href="../static/css/css.css" />
+   <title>Title</title>
 </head>
 <body>
-
+<h1 style="text-align: center">Url-Shortner</h1>
+<div class="form">
+   <hr />
+   <form action="/home" method="post">
+      <div class="items">
+         <label >Url: </label>
+         <input type="url" name="url" />
+      </div>
+      <br />
+      <div class="items">
+         <label > Alias: </label>
+         <input type="text" name="alias" />
+      </div>
+      <br />
+      <button type="submit">Submit</button>
+   </form>
+   <hr />
+</div>
+<div class="url">
+   <h3>Saved Urls</h3>
+   <ul>
+      {{range .}}
+      <li>
+         <a href="{{.Url}}" target="_blank">{{.Alias}}</a> -->
+         [<i>
+            <a href="/home/delete/{{.Alias}}"
+            >del</a
+            >
+         </i>]
+         [<i>
+            <a href="/home/copy/{{.Alias}}"
+            >copy</a
+            >
+         </i>]
+      </li>
+      {{end}}
+   </ul>
+</div>
 </body>
 </html>

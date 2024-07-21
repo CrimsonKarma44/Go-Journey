@@ -84,6 +84,7 @@ func main() {
 			}
 			//db.Where("Username = ?", username).First(&user)
 			fmt.Println(password)
+			err = query.Scan(&hashedPassword)
 			query.Next()
 			err = query.Scan(&hashedPassword)
 			if err != nil {
