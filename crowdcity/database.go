@@ -13,8 +13,7 @@ import (
 // DB is the database connection pool.
 var DB *sql.DB
 
-// InitDB initializes the database connection.
-func InitDB() {
+func DNS() string {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file")
@@ -27,8 +26,12 @@ func InitDB() {
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_NAME"),
 	)
+	return dsn
+}
 
-	DB, err = sql.Open("mysql", dsn)
+// InitDB initializes the database connection.
+func InitDB() {
+	DB, err := sql.Open("mysql", DNS())
 	if err != nil {
 		log.Fatalf("Error connecting to the database: %v", err)
 	}
