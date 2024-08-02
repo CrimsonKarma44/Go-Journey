@@ -37,7 +37,3 @@ func EmailValidator(email string) error {
 	}
 	return errors.New("invalid email")
 }
-
-func LoginValidator(email string, password string) error {
-	return nil
-}

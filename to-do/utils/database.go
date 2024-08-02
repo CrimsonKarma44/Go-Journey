@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"gorm.io/gorm"
+	"log"
 	"to-do/models"
 )
 
@@ -14,7 +15,10 @@ func RetrievingAllUser(db *gorm.DB) []models.User {
 
 func RetrievingAllList(db *gorm.DB) []models.List {
 	var lists []models.List
-	db.Find(&lists)
+	result := db.Find(&lists)
+	if result.Error != nil {
+		log.Println("retrieving error:", result.Error)
+	}
 	return lists
 }
 
@@ -25,8 +29,8 @@ func InsertingList(db *gorm.DB, lists *models.List) error {
 	}
 	return nil
 }
-func InsertingUsers(db *gorm.DB, users *models.User) error {
-	result := db.Create(users)
+func InsertingUsers(db *gorm.DB, users models.User) error {
+	result := db.Create(&users)
 	if result.Error != nil {
 		return result.Error
 	}
