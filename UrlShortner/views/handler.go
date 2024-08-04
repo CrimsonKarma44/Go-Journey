@@ -18,6 +18,7 @@ func DisplayHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	urls := utils.JsonUrlReader()
+	log.Println(":8080/home")
 	utils.RenderTemplate(w, "templates/home", urls)
 }
 

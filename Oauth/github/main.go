@@ -1,9 +1,11 @@
 package main
 
 import (
-	"UrlShortner/urls"
+	"github/setting"
+	"github/urls"
 )
 
 func main() {
+	setting.Init()
 	urls.UrlHandler()
 }
