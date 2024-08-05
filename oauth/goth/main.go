@@ -1,189 +1,102 @@
-//package main
-//
-//import (
-//	"fmt"
-//	"github.com/joho/godotenv"
-//	"github.com/markbates/goth"
-//	"github.com/markbates/goth/providers/google"
-//	"log"
-//	"net/http"
-//	"os"
-//)
-//
-//func urls() {
-//	http.HandleFunc("/", Home)
-//	http.HandleFunc("/auth/{provider}/callback", CallBackHandler)
-//	http.HandleFunc("/auth/{provider}", AuthHandler)
-//
-//	fmt.Println("Listening on port localhost:8080/home")
-//	fmt.Println("Starting server...")
-//	log.Fatal(http.ListenAndServe("localhost:8080", nil))
-//}
-//
-//func main() {
-//	err := godotenv.Load(".env")
-//	if err != nil {
-//		log.Fatal("Error loading .env file")
-//	}
-//
-//	goth.UseProviders(
-//		google.New(os.Getenv("GOOGLE_KEY"), os.Getenv("GOOGLE_SECRET"), CallbackURL, "email", "profile"),
-//	)
-//
-//	urls()
-//}
-
-//package main
-//
-//import (
-//	"fmt"
-//	"github.com/joho/godotenv"
-//	"log"
-//	"net/http"
-//	"os"
-//
-//	"github.com/gorilla/mux"
-//	"github.com/markbates/goth"
-//	"github.com/markbates/goth/gothic"
-//	"github.com/markbates/goth/providers/google"
-//)
-//
-//func main() {
-//	err := godotenv.Load(".env")
-//	if err != nil {
-//		log.Fatal("Error loading .env file")
-//	}
-//	key := os.Getenv("GOOGLE_KEY")       // Your Google client ID
-//	secret := os.Getenv("GOOGLE_SECRET") // Your Google client secret
-//	callbackURL := "http://localhost:8080/auth/google/callback"
-//
-//	goth.UseProviders(
-//		google.New(key, secret, callbackURL, "email", "profile"),
-//	)
-//
-//	r := mux.NewRouter()
-//
-//	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-//		fmt.Fprintln(w, "<a href='/auth/google'>Log in with Google</a>")
-//	})
-//
-//	r.HandleFunc("/auth/{provider}/callback", func(w http.ResponseWriter, r *http.Request) {
-//		user, err := gothic.CompleteUserAuth(w, r)
-//		if err != nil {
-//			fmt.Fprintln(w, err)
-//			return
-//		}
-//		fmt.Fprintf(w, "User: %#v", user)
-//	})
-//
-//	r.HandleFunc("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
-//		gothic.BeginAuthHandler(w, r)
-//	})
-//
-//	r.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
-//		gothic.Logout(w, r)
-//		fmt.Fprintln(w, "Logged out!")
-//	})
-//
-//	http.ListenAndServe(":8080", r)
-//}
-
 package main
 
 import (
 	"fmt"
+	"github.com/gorilla/mux"
+	"github.com/markbates/goth/gothic"
 	"html/template"
 	"log"
 	"net/http"
-	"os"
-	"sort"
-
-	"github.com/gorilla/pat"
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/gothic"
-	"github.com/markbates/goth/providers/google"
 )
 
-func main() {
-	goth.UseProviders(
-		google.New(os.Getenv("GOOGLE_KEY"), os.Getenv("GOOGLE_SECRET"), "http://localhost:3000/auth/google/callback"),
-	)
+func urlHandler() {
 
-	// OpenID Connect is based on OpenID Connect Auto Discovery URL (https://openid.net/specs/openid-connect-discovery-1_0-17.html)
-	// because the OpenID Connect provider initialize itself in the New(), it can return an error which should be handled or ignored
-	// ignore the error for now
-	//openidConnect, _ := openidConnect.New(os.Getenv("OPENID_CONNECT_KEY"), os.Getenv("OPENID_CONNECT_SECRET"), "http://localhost:3000/auth/openid-connect/callback", os.Getenv("OPENID_CONNECT_DISCOVERY_URL"))
-	//if openidConnect != nil {
-	//	goth.UseProviders(openidConnect)
-	//}
+	r := mux.NewRouter()
 
-	m := map[string]string{
-		"google": "Google",
-	}
-	var keys []string
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		//RenderTemplate(w, "home", nil)
+		fmt.Fprintln(w, "<a href='/auth/google'>Log in with Google</a>")
+	})
 
-	providerIndex := &ProviderIndex{Providers: keys, ProvidersMap: m}
-
-	p := pat.New()
-	p.Get("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
-
-		user, err := gothic.CompleteUserAuth(res, req)
+	r.HandleFunc("/auth/{provider}/callback", func(w http.ResponseWriter, r *http.Request) {
+		user, err := gothic.CompleteUserAuth(w, r)
 		if err != nil {
-			fmt.Fprintln(res, err)
+			fmt.Fprintln(w, err)
 			return
 		}
-		t, _ := template.New("foo").Parse(userTemplate)
-		t.Execute(res, user)
+
+		//gothic.StoreInSession("userEmail", user.Email, r, w)
+		//gothic.StoreInSession("userIDToken", user.IDToken, r, w)
+		//gothic.StoreInSession("userAccessToken", user.AccessToken, r, w)
+		//gothic.StoreInSession("userAccessTokenSecret", user.AccessTokenSecret, r, w)
+
+		sessions, _ := store.Get(r, "TestUser")
+		sessions.Values["user"] = user
+		sessions.Save(r, w)
+
+		//fmt.Fprintf(w, "%#v", user)
+		http.Redirect(w, r, "/test", http.StatusFound)
 	})
 
-	p.Get("/logout/{provider}", func(res http.ResponseWriter, req *http.Request) {
-		gothic.Logout(res, req)
-		res.Header().Set("Location", "/")
-		res.WriteHeader(http.StatusTemporaryRedirect)
+	r.HandleFunc("/auth/{provider}", func(w http.ResponseWriter, r *http.Request) {
+		title := r.URL.Path[len("/auth/"):]
+		log.Println("/auth/" + title)
+
+		gothic.BeginAuthHandler(w, r)
 	})
 
-	p.Get("/auth/{provider}", func(res http.ResponseWriter, req *http.Request) {
-		// try to get the user without re-authenticating
-		if gothUser, err := gothic.CompleteUserAuth(res, req); err == nil {
-			t, _ := template.New("foo").Parse(userTemplate)
-			t.Execute(res, gothUser)
+	r.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		session, _ := store.Get(r, "TestUser")
+		user, _ := session.Values["user"]
+		if user == nil {
+			http.Redirect(w, r, "/", http.StatusFound)
 		} else {
-			gothic.BeginAuthHandler(res, req)
+			session.Options.MaxAge = -1 // Invalidate the session
+			session.Save(r, w)
+			gothic.Logout(w, r)
+
+			log.Println("Logged out!")
+			http.Redirect(w, r, "/", http.StatusFound)
 		}
 	})
 
-	p.Get("/", func(res http.ResponseWriter, req *http.Request) {
-		t, _ := template.New("foo").Parse(indexTemplate)
-		t.Execute(res, providerIndex)
+	r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+		//user, _ := gothic.CompleteUserAuth(w, r)
+		//type userInfo struct {
+		//	Email                 string
+		//	UserIDToken           string
+		//	UserAccessToken       string
+		//	UserAccessTokenSecret string
+		//}
+		//user := userInfo{}
+		//user.Email, _ = gothic.GetFromSession("userEmail", r)
+		//user.UserIDToken, _ = gothic.GetFromSession("userIDToken", r)
+		//user.UserAccessToken, _ = gothic.GetFromSession("userAccessToken", r)
+		//user.UserAccessTokenSecret, _ = gothic.GetFromSession("userAccessTokenSecret", r)
+
+		sessions, _ := store.Get(r, "TestUser")
+		user, _ := sessions.Values["user"]
+		if user == nil {
+			http.Redirect(w, r, "/", http.StatusFound)
+		}
+
+		//fmt.Fprintf(w, "%#v", user)
+
+		RenderTemplate(w, "templates/home", user)
 	})
 
-	log.Println("listening on localhost:3000")
-	log.Fatal(http.ListenAndServe(":3000", p))
+	fmt.Println("Starting Server at port \"localhost:8000\" .....")
+
+	http.ListenAndServe(":8000", r)
+
 }
 
-type ProviderIndex struct {
-	Providers    []string
-	ProvidersMap map[string]string
+func main() {
+	Setup()
+	urlHandler()
 }
 
-var indexTemplate = `{{range $key,$value:=.Providers}}
-    <p><a href="/auth/{{$value}}">Log in with {{index $.ProvidersMap $value}}</a></p>
-{{end}}`
-
-var userTemplate = `
-<p><a href="/logout/{{.Provider}}">logout</a></p>
-<p>Name: {{.Name}} [{{.LastName}}, {{.FirstName}}]</p>
-<p>Email: {{.Email}}</p>
-<p>NickName: {{.NickName}}</p>
-<p>Location: {{.Location}}</p>
-<p>AvatarURL: {{.AvatarURL}} <img src="{{.AvatarURL}}"></p>
-<p>Description: {{.Description}}</p>
-<p>UserID: {{.UserID}}</p>
-<p>AccessToken: {{.AccessToken}}</p>
-<p>ExpiresAt: {{.ExpiresAt}}</p>
-<p>RefreshToken: {{.RefreshToken}}</p>
-`
+func RenderTemplate(w http.ResponseWriter, tmpl string, u interface{}) {
+	t, _ := template.ParseFiles(tmpl + ".html")
+	_ = t.Execute(w, u)
+}
