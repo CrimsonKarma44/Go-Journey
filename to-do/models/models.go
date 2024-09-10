@@ -8,7 +8,7 @@ type User struct {
 	gorm.Model
 
 	UserName string `gorm:"size:24"`
-	Password string `gorm:"size:24"`
+	Password string `gorm:"size:250"`
 	Email    string `gorm:"unique;not null"`
 
 	Lists []List

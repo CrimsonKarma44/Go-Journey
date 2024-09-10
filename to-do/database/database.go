@@ -1,7 +1,6 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -69,17 +68,24 @@ func GormMysqlInit() (*gorm.DB, error) {
 }
 func GormPostgresqlInit() (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(DNSPostgresql()), &gorm.Config{})
+
+func GormInit() (*gorm.DB, error) {
+	DB, err := gorm.Open(mysql.Open(DNS()), &gorm.Config{})
+
 	if err != nil {
 		log.Fatalf("Error connecting to the database: %v", err)
-	}
-
-	log.Println("Database connection established")
-	err = db.AutoMigrate(&models.User{}, &models.List{})
-	if err != nil {
-		log.Fatalf("Error auto migrate lists: %v", err)
 		return nil, err
 	}
 
+	log.Println("Database connection established")
+	return DB, nil
+}
+func Migration(db *gorm.DB) error {
+	err := db.AutoMigrate(&models.User{}, &models.List{})
+	if err != nil {
+		log.Fatalf("Error auto migrate lists: %v", err)
+		return err
+	}
 	log.Println("Migration complete")
-	return db, nil
+	return nil
 }

@@ -1,1 +1,38 @@
-[{"Name":"Kingdavid oredu","Age":22,"School":"fut minna","DateOfBirth":"2024-06-30T13:48:24.9758998+01:00"},{"Name":"Okereke Princewill","Age":23,"School":"Fut minna","DateOfBirth":"2024-06-30T13:48:48.882359+01:00"},{"Name":"David Abdul","Age":23,"School":"Joy international","DateOfBirth":"2024-07-02T22:31:34.032825032+01:00"},{"Name":"Jack Davis","Age":32,"School":"Nil","DateOfBirth":"2024-07-02T22:32:39.398339889+01:00"},{"Name":"Joseph","Age":30,"School":"Nil","DateOfBirth":"2024-07-02T22:48:23.234090508+01:00"}]
+[
+  {
+    "Name": "Kingdavid oredu",
+    "Age": 22,
+    "School": "fut minna",
+    "DateOfBirth": "2024-06-30T13:48:24.9758998+01:00"
+  },
+  {
+    "Name": "Okereke Princewill",
+    "Age": 23,
+    "School": "Fut minna",
+    "DateOfBirth": "2024-06-30T13:48:48.882359+01:00"
+  },
+  {
+    "Name": "David Abdul",
+    "Age": 23,
+    "School": "Joy international",
+    "DateOfBirth": "2024-07-02T22:31:34.032825032+01:00"
+  },
+  {
+    "Name": "Jack Davis",
+    "Age": 32,
+    "School": "Nil",
+    "DateOfBirth": "2024-07-02T22:32:39.398339889+01:00"
+  },
+  {
+    "Name": "Joseph",
+    "Age": 30,
+    "School": "Nil",
+    "DateOfBirth": "2024-07-02T22:48:23.234090508+01:00"
+  },
+  {
+    "Name": "vincent",
+    "Age": 23,
+    "School": "futmina",
+    "DateOfBirth": "2024-08-04T21:21:24.209989535+01:00"
+  }
+]

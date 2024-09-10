@@ -9,23 +9,24 @@ import (
 
 func main() {
 	//Urlhandler()
-	router := mux.NewRouter()
-	muxhandler(router)
+	muxhandler()
 }
 
-func muxhandler(router *mux.Router) {
+func muxhandler() {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", handlerfunc).Methods("GET")
-	http.Handle("/", r)
+	//http.Handle("/", r)
 
 	fmt.Println("Listening on port 8080")
 	fmt.Println("Starting server...")
 
-	log.Fatal(http.ListenAndServe("localhost:8080", nil))
+	//log.Fatal(http.ListenAndServe("localhost:8080", nil))
+	log.Fatal(http.ListenAndServe("localhost:8080", r))
 }
 
 func handlerfunc(w http.ResponseWriter, r *http.Request) {
+	log.Println(":8080/")
 	fmt.Fprintf(w, "Hello my World!")
 }
 
