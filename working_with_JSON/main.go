@@ -10,45 +10,78 @@ import (
 )
 
 func main() {
+	//var date time.Time
+	//date = time.Date(2001, time.January, 23, 00, 00, 00, 0, time.Local)
+	//student := models.Student{Name: "Princewill", Age: 23, School: "FUTMINNA", DateOfBirth: date}
+
+	//utils.Single(student)
+
 	reader := bufio.NewReader(os.Stdin)
-
 	var person models.Student
-	var condition string
 	var students []models.Student
+	var num int
+	var condition string
+	for {
+		fmt.Print("How many students:")
+		fmt.Scan(&num)
+		if num == 1 {
 
-	fmt.Println("register student? (y/n)")
-	fmt.Scanln(&condition)
-	if condition == "y" {
+			fmt.Println("Name:")
+			name, _, _ := reader.ReadLine()
+			person.Name = string(name)
 
-		fmt.Println("Name:")
-		name, _, _ := reader.ReadLine()
-		person.Name = string(name)
+			fmt.Println("Age:")
+			fmt.Scan(&person.Age)
 
-		fmt.Println("Age:")
-		fmt.Scan(&person.Age)
+			fmt.Println("School:")
+			school, _, _ := reader.ReadLine()
+			person.School = string(school)
 
-		fmt.Println("School:")
-		school, _, _ := reader.ReadLine()
-		person.School = string(school)
+			person.DateOfBirth = time.Now()
 
-		person.DateOfBirth = time.Now()
+			err := utils.Single(person)
 
-		err := utils.StudentAdder(person)
+			if err != nil {
+				fmt.Println("Student could not be added!...", err)
+			} else {
+				fmt.Println("Student Added....")
+			}
+		} else if num > 1 {
 
-		if err != nil {
-			fmt.Println("Student could not be added!...", err)
-		} else {
-			fmt.Println("Student Added....")
+			for i := 0; i < num; i++ {
+
+				fmt.Println("Name:")
+				name, _, _ := reader.ReadLine()
+				person.Name = string(name)
+
+				fmt.Println("Age:")
+				fmt.Scan(&person.Age)
+
+				fmt.Println("School:")
+				school, _, _ := reader.ReadLine()
+				person.School = string(school)
+
+				// for some reason the dateofbirth refused to save using fmt.Scan
+				person.DateOfBirth = time.Now()
+
+				fmt.Println("............")
+				fmt.Println("....Next....")
+				fmt.Println("............")
+				students = append(students, person)
+			}
+			err := utils.Double(students)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Println(students)
+			}
 		}
-	} else if condition == "n" {
-	}
 
-	fmt.Println("Do want to view Students? (y/n)")
-	fmt.Scanln(&condition)
-	if condition == "y" {
-		fmt.Println("The recorded students are:")
-		for count, value := range utils.Reader(students) {
-			fmt.Println(count+1, value.Name)
+		fmt.Println("Do you wanna continue? (y/n)")
+		fmt.Scan(&condition)
+		if condition == "y" {
+		} else {
+			break
 		}
 	}
 }
