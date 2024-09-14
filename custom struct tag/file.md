@@ -1,0 +1,28 @@
+# Other Functions
+- fmt.Println("TypeOf", reflect.TypeOf(t))
+- fmt.Println("TypeOf.Size", reflect.TypeOf(t).Size())
+- fmt.Println("TypeOf.Name", reflect.TypeOf(t).Name())
+- fmt.Println("TypeOf.String", reflect.TypeOf(t).String())
+- fmt.Println("TypeOf.Align", reflect.TypeOf(t).Align())
+- fmt.Println("TypeOf.NumField", reflect.TypeOf(t).NumField())
+- fmt.Println("TypeOf.FieldAlign", reflect.TypeOf(t).FieldAlign())
+
+- fmt.Println("TypeOf.Kind", reflect.TypeOf(t).Kind())
+- fmt.Println("TypeOf.String", reflect.TypeOf(t).Kind().String())
+
+- fmt.Println("TypeOf.Field", reflect.TypeOf(t).Field(0))
+- fmt.Println("TypeOf.Field", reflect.TypeOf(t).Field(1))
+- fmt.Println("TypeOf.Field.Tag", reflect.TypeOf(t).Field(0).Tag)
+- fmt.Println("TypeOf.Field.Name", reflect.TypeOf(t).Field(0).Name)
+- fmt.Println("TypeOf.Field.Type", reflect.TypeOf(t).Field(0).Type)
+- fmt.Println("TypeOf.Field.Index", reflect.TypeOf(t).Field(0).Index)
+- fmt.Println("TypeOf.Field.Offset", reflect.TypeOf(t).Field(0).Offset)
+- fmt.Println("TypeOf.Field.PkgPath", reflect.TypeOf(t).Field(0).PkgPath)
+- fmt.Println("TypeOf.Field.Anonymous", reflect.TypeOf(t).Field(0).Anonymous)
+
+- fmt.Println(t)
+- fmt.Println("ValueOf", reflect.ValueOf(t))
+- fmt.Println("ValueOf.string", reflect.ValueOf(t).String())
+- fmt.Println("ValueOf.NumField", reflect.ValueOf(t).NumField())
+- fmt.Println("ValueOf.Field", reflect.ValueOf(t).Field(0))
+- fmt.Println("ValueOf.kind", reflect.ValueOf(t).Kind())

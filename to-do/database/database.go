@@ -1,6 +1,7 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -68,9 +69,11 @@ func GormMysqlInit() (*gorm.DB, error) {
 }
 func GormPostgresqlInit() (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(DNSPostgresql()), &gorm.Config{})
+	return db, err
+}
 
 func GormInit() (*gorm.DB, error) {
-	DB, err := gorm.Open(mysql.Open(DNS()), &gorm.Config{})
+	DB, err := gorm.Open(mysql.Open(DNSMysql()), &gorm.Config{})
 
 	if err != nil {
 		log.Fatalf("Error connecting to the database: %v", err)

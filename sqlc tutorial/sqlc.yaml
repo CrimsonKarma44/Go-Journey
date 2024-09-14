@@ -1,0 +1,16 @@
+#version: 1
+#packages:
+#  - path: "sqlc"
+#    name: "sqlc"
+#    engine: "sqlite"
+#    schema: "schema.sql"
+#    queries: "query.sql"
+version: "2"
+sql:
+  - engine: "mysql"
+    queries: "query.sql"
+    schema: "schema.sql"
+    gen:
+      go:
+        package: "sqlc"
+        out: "database"
