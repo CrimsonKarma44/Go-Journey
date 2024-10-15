@@ -11,11 +11,17 @@ func main() {
 	moneyStorage := storage{name: "bank", money: bankInstance.money}
 	fmt.Println(bankInstance)
 	fmt.Println(moneyStorage)
+
+	fmt.Println("test", money{20000, "Naira"})
 }
 
 type money struct {
 	value    int
 	currency string
+}
+
+func (m money) String() string {
+	return fmt.Sprintf("%d in %s", m.value, m.currency)
 }
 
 type bank struct {

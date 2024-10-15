@@ -40,7 +40,7 @@ func main() {
 	//		fmt.Println(u.UserName)
 	//	}
 
-	db, err := database.GormInit()
+	db, err = database.GormInit()
 	if err != nil {
 		panic(err)
 	}
