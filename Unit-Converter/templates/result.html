@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<title>Unit Converter</title>
+<body>
+<div style="display:flex; flex-direction: column;padding: 8px;width: 100vw; gap: 24px">
+    <span style="font-weight: bold;font-size: x-large ">Unit Converter</span>
+
+    <div id="section" style="display:flex; flex-direction:row; gap: 8px">
+        <button class="unblock" onclick="reveal('length')" id="length">Length</button>
+        <button class="block" onclick="reveal('weight')" id="weight" >Weight</button>
+        <button class="block" onclick="reveal('temp')" id="temp" >Temperature</button>
+    </div>
+    <div>
+        <span style="font-weight: bold;font-size: large ">Calculation Result</span>
+        <br/>
+        <span id="result">{{.Value}}{{.From}} = {{.Response}}{{.To}}</span>
+        <br>
+        <form action="/home" method="get">
+            <button type="submit">Reset</button>
+        </form>
+    </div>
+</div>
+
+<script src="../static/js/handler.js"></script>
+<style>
+    .block{
+        border-style: none;
+        background: transparent;
+    }
+    .unblock{
+        color: cadetblue;
+        border: none;
+        border-bottom: cadetblue solid thick;
+        background: transparent;
+    }
+</style>
+</body>
+</html>

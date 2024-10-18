@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+    <title>Unit Converter</title>
+<body>
+<div style="display:flex; flex-direction: column;padding: 8px;width: 100vw; gap: 24px">
+    <span style="font-weight: bold;font-size: x-large ">Unit Converter</span>
+
+    <div id="section" style="display:flex; flex-direction:row; gap: 8px">
+        <button class="unblock" onclick="reveal('length')" id="length">Length</button>
+        <button class="block" onclick="reveal('weight')" id="weight" >Weight</button>
+        <button class="block" onclick="reveal('temp')" id="temp" >Temperature</button>
+    </div>
+    <div id="form" class="">
+        <form id="lengthForm"  action="" method="post" style="display: flex; flex-direction: column; gap: 8px">
+            <label for="val">Enter the length to convert</label>
+            <input name="val" id="val" style="max-width: 240px" required/>
+            <label for="from">Unit to convert from</label>
+            <input name="from" id="from" style="max-width: 240px" required/>
+            <label for="to">Unit to convert to</label>
+            <input name="to" id="to" style="max-width: 240px" required/>
+            <input name="type" value="length" id="to" hidden="true" style="max-width: 240px"/>
+            <button type="submit" style="max-width: fit-content">Convert</button>
+        </form>
+        <form id="weightForm" action="" method="post" style="display: none; flex-direction: column; gap: 8px">
+            <label for="val">Enter the weight to convert</label>
+            <input name="val" id="val" style="max-width: 240px" required/>
+            <label for="from">Unit to convert from</label>
+            <input name="from" id="from" style="max-width: 240px" required/>
+            <label for="to">Unit to convert to</label>
+            <input name="to" id="to" style="max-width: 240px" required/>
+            <input name="type" value="weight" id="to" hidden="true" style="max-width: 240px"/>
+            <button type="submit" style="max-width: fit-content">Convert</button>
+        </form>
+        <form id="tempForm" action="" method="post" style="display: none; flex-direction: column; gap: 8px">
+            <label for="val">Enter the temperature to convert</label>
+            <input name="val" id="val" style="max-width: 240px" required/>
+            <label for="from">Unit to convert from</label>
+            <input name="from" id="from" style="max-width: 240px" required/>
+            <label for="to">Unit to convert to</label>
+            <input name="to" id="to" style="max-width: 240px" required/>
+            <input name="type" value="temp" id="to" hidden="true" style="max-width: 240px"/>
+            <button type="submit" style="max-width: fit-content">Convert</button>
+        </form>
+    </div>
+</div>
+
+<script src="../static/js/handler.js"></script>
+<style>
+    .block{
+        border-style: none;
+        background: transparent;
+    }
+    .unblock{
+        color: cadetblue;
+        border: none;
+        border-bottom: cadetblue solid thick;
+        background: transparent;
+    }
+</style>
+</body>
+</html>

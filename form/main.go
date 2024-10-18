@@ -212,7 +212,7 @@ func urlHandler() {
 	http.HandleFunc("/create", creatProfile)
 	http.HandleFunc("/update", editPorfile)
 	//http.HandleFunc("/User/edit", creatProfile)
-	log.Fatal(http.ListenAndServe("localhost:4080", nil))
+	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
 
 func main() {
