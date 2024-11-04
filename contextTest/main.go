@@ -17,7 +17,6 @@ func doSomething(ctx context.Context) {
 func doAnother(ctx context.Context) {
 	fmt.Println("doAnother", ctx.Value("myKeys"))
 }
-
 func main() {
 	ctx := context.Background()
 

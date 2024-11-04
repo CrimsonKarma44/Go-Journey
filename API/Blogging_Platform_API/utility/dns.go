@@ -1,15 +1,22 @@
-package model
+package utility
 
-import "time"
+import (
+	"fmt"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
+)
 
-type Blog struct {
-	Id        int       `json:"id"`
-	Title     string    `json:"title"`
-	Content   string    `json:"content"`
-	Category  string    `json:"category"`
-	Tags      []string  `json:"tags"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
+func DNS() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	dsn := fmt.Sprintf("%s:%s@/%s?parseTime=true",
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+	)
+	return dsn
 }
-
-//func (b *Blog) Save() error {}

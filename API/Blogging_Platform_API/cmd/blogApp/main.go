@@ -1,8 +1,11 @@
 package main
 
 import (
-	"Blogging-Platform-API/handler"
+	"Blogging_Platform_API/handler"
+	"Blogging_Platform_API/utility"
+	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
 )
@@ -18,5 +21,19 @@ func url() {
 }
 
 func main() {
+	err := initialize(utility.DNS())
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Database Connection established")
 	url()
+}
+
+func initialize(dns string) error {
+	fmt.Println("Initializing Database...")
+	db, err := sql.Open("mysql", dns)
+	if err != nil {
+		return err
+	}
+	return db.Ping()
 }

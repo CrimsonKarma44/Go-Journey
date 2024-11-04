@@ -19,10 +19,10 @@ VALUES (?, ?, ?, ?, ?, ?)
 
 type CreateBlogParams struct {
 	Title     string
-	Content   sql.NullString
-	Category  sql.NullString
+	Content   string
+	Category  string
 	Tags      json.RawMessage
-	Createdat sql.NullTime
+	Createdat time.Time
 	Updatedat time.Time
 }
 
@@ -46,4 +46,137 @@ WHERE id = ?
 func (q *Queries) DeleteBlog(ctx context.Context, id int64) error {
 	_, err := q.db.ExecContext(ctx, deleteBlog, id)
 	return err
+}
+
+const termBlogSearch = `-- name: TermBlogSearch :many
+SELECT id, title, content, category, tags, updatedat, createdat
+FROM blog
+WHERE title LIKE CONCAT('%', ?, '%')
+   OR content LIKE CONCAT('%', ?, '%')
+   OR category LIKE CONCAT('%', ?, '%')
+`
+
+type TermBlogSearchParams struct {
+	CONCAT   interface{}
+	CONCAT_2 interface{}
+	CONCAT_3 interface{}
+}
+
+func (q *Queries) TermBlogSearch(ctx context.Context, arg TermBlogSearchParams) ([]Blog, error) {
+	rows, err := q.db.QueryContext(ctx, termBlogSearch, arg.CONCAT, arg.CONCAT_2, arg.CONCAT_3)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blog
+	for rows.Next() {
+		var i Blog
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Content,
+			&i.Category,
+			&i.Tags,
+			&i.Updatedat,
+			&i.Createdat,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const updateBlog = `-- name: UpdateBlog :exec
+UPDATE blog
+SET title = ?,
+    content = ?,
+    category = ?,
+    tags = ?,
+    updatedAt = ?
+WHERE id = ?
+`
+
+type UpdateBlogParams struct {
+	Title     string
+	Content   string
+	Category  string
+	Tags      json.RawMessage
+	Updatedat time.Time
+	ID        int64
+}
+
+func (q *Queries) UpdateBlog(ctx context.Context, arg UpdateBlogParams) error {
+	_, err := q.db.ExecContext(ctx, updateBlog,
+		arg.Title,
+		arg.Content,
+		arg.Category,
+		arg.Tags,
+		arg.Updatedat,
+		arg.ID,
+	)
+	return err
+}
+
+const viewAllBlog = `-- name: ViewAllBlog :many
+select id, title, content, category, tags, updatedat, createdat
+from blog
+`
+
+func (q *Queries) ViewAllBlog(ctx context.Context) ([]Blog, error) {
+	rows, err := q.db.QueryContext(ctx, viewAllBlog)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Blog
+	for rows.Next() {
+		var i Blog
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Content,
+			&i.Category,
+			&i.Tags,
+			&i.Updatedat,
+			&i.Createdat,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const viewSingleBlog = `-- name: ViewSingleBlog :one
+select id, title, content, category, tags, updatedat, createdat
+from blog
+WHERE id = ?
+`
+
+func (q *Queries) ViewSingleBlog(ctx context.Context, id int64) (Blog, error) {
+	row := q.db.QueryRowContext(ctx, viewSingleBlog, id)
+	var i Blog
+	err := row.Scan(
+		&i.ID,
+		&i.Title,
+		&i.Content,
+		&i.Category,
+		&i.Tags,
+		&i.Updatedat,
+		&i.Createdat,
+	)
+	return i, err
 }

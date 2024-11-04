@@ -5,7 +5,6 @@
 package Blogging_Platform_API
 
 import (
-	"database/sql"
 	"encoding/json"
 	"time"
 )
@@ -13,9 +12,9 @@ import (
 type Blog struct {
 	ID        int64
 	Title     string
-	Content   sql.NullString
-	Category  sql.NullString
+	Content   string
+	Category  string
 	Tags      json.RawMessage
-	Createdat sql.NullTime
 	Updatedat time.Time
+	Createdat time.Time
 }

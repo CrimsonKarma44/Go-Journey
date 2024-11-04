@@ -1,9 +1,9 @@
 CREATE TABLE blog (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) not null,
-    content text,
-    category VARCHAR(255),
+    content text not null,
+    category VARCHAR(255) not null ,
     tags JSON,
-    createdAt TIMESTAMP,
-    updatedAt timestamp NOT NULL DEFAULT NOW()
+    updatedAt timestamp NOT NULL DEFAULT NOW(),
+    createdAt TIMESTAMP not null
 );

@@ -12,10 +12,10 @@ type Record struct {
 }
 
 func (r *Record) Save() error {
-	filename := r.Day + `.txt`
+	filename := r.Alias + `.txt`
 	return os.WriteFile(
 		filename,
-		[]byte(string(r.Alias)+"\n"+string(r.Spent)),
+		[]byte(string(r.Alias)+"\n"),
 		0600,
 	)
 }
