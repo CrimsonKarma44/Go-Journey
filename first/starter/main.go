@@ -86,7 +86,7 @@ func main() {
 func greetUsers() {
 	fmt.Printf("Welcome to %v booking application\n", conferenceName)
 	fmt.Printf("We have a total of %v tickets and %v are still avaialable.\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here to attend")
+	fmt.Println("get your tickets here to attend")
 }
 
 func getFirstNames() []string {

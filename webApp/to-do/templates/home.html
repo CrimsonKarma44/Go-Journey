@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="../static/css/style.css" />
+      <title>Document</title>
+      <script>
+         function CreateToDoItems() {
+            fetch('/create', {
+                method: 'POST',
+                })
+                //  .then(response => response.text())
+                //  .then(data => alert(data));
+             }
+      </script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="todo-header">
+            <h2>To-DO List</h2>
+            <img src="../static/img/OIP%20(2).jpeg" alt="" />
+         </div>
+         <div class="todo-body">
+            <input
+               type="text"
+               id="todoText"
+               class="todo-input"
+               placeholder="Add your items"
+            />
+            <img
+               src="/static/img/th.jpeg"
+               alt="+"
+               id="AddUpdateClick"
+               onclick="CreateToDoItems();"
+            />
+         </div>
+         <div class="todo-controls">
+            <h5 id="Alert"></h5>
+            <ul id="list-items" class="list-items">
+                {{range .}}
+               <li>{{.Title}}</li>
+               {{end}}
+            </ul>
+         </div>
+      </div>
+   </body>
+</html>

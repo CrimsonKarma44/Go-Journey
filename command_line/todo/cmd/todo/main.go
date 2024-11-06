@@ -35,7 +35,7 @@ func main() {
 
 	// Define an items list
 	l := &todo.List{}
-	// Use the Get method to read to do items from file
+	// Use the get method to read to do items from file
 	if err := l.Get(todoFileName); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
