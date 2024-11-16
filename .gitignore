@@ -1,1 +1,7 @@
 *.env
+.idea
+.gitignore
+*.jpg
+*.jpeg
+*.JPEG
+*.png
