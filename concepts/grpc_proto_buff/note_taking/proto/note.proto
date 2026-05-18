@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package note;
+option go_package = "github.com/CrimsonKarma44/grpc_note";
+
+service Note {
+  rpc CreateNote(NoteRequest) returns (NoteResponse) {}
+  rpc GetNote(AlterNoteRequest) returns (NoteResponse) {}
+  rpc UpdateNote(AlterNoteRequest) returns (AlterNoteResponse) {}
+  rpc DeleteNote(AlterNoteRequest) returns (AlterNoteResponse) {}
+}
+
+message NoteRequest {
+  string title = 1;
+  string content = 2;
+}
+message AlterNoteRequest {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+
+message NoteResponse {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message AlterNoteResponse {
+  int64 status_code = 1;
+  string message = 2;
+}

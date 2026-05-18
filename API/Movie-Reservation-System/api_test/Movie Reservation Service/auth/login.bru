@@ -1,0 +1,39 @@
+meta {
+  name: login
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://movie-reservation-system-buuk.onrender.com/auth/login
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer
+}
+
+body:json {
+    {
+      "email": "admin@example.com",
+      "username": "admin",
+      "password": "admin"
+    }
+  
+  //   {
+  //     "email": "vincentprincewill44@gmail.com",
+  //     "username": "Darksummer",
+  //     "password": "Darksummer44."
+  //   }
+  //   {
+  //     "email": "vincentprincewill44@yahoo.com",
+  //     "username": "Darksummer",
+  //     "password": "Darksummer44."
+  //   }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

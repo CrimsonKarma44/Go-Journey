@@ -19,7 +19,7 @@ func CreateViewAllHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	queries := Blogging_Platform_API.New(db)
 	if r.Method == http.MethodGet {
-		fmt.Println("Retrieving Posts ...")
+	
 
 		if term := r.URL.Query().Get("term"); term != "" {
 			fmt.Println("Retrieving Filtered ...")
